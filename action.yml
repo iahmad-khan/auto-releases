@@ -1,0 +1,79 @@
+name: 'auto-releases'
+author: 'iahmad-khan'
+description: 'AutoReleases with Semantic Versioning from next and latest branches'
+branding:
+  icon: activity
+  color: green
+inputs:
+  github-token: # id of input
+    default: ${{ github.token }}
+    required: false
+    description: 'the GH token to connect to github from the action'
+  slack-token:
+    description: "Slack token to send release notes to slack"
+    required: true
+  slack-channels:
+    description: "Slack channels to send release notes to, pass multiple , separated values e.g channel1, channel2"
+    required: true
+  notify-on-pre-release:
+    description: "Whether to notify on pre-release"
+    required: false
+    default: "true"
+  dry-run:
+    description: "check if the action would succeed"
+    required: false
+    default: "FALSE"
+  release-branch:
+    description: "release branch name"
+    required: false
+    default: "release"
+  dev-branch:
+    description: "dev branch name"
+    required: false
+    default: "main"
+  main-branch:
+    description: "Candidate branch name"
+    required: false
+    default: "candidate"
+  force-patch-releases:
+    description: "Force patch releases"
+    required: false
+    default: false
+  registry:
+    description: "Registry to use for the release"
+    required: false
+    default: ""
+  ecrRegion:
+    description: "ECR region"
+    required: false
+    default: ""
+  ecrAccessKey:
+    description: "ECR access key"
+  ecrAccessSecret:
+    description: "ECR access secret"
+    required: false
+    default: ""
+  appMatrix:
+    description: "App matrix to use for the release"
+    required: false
+    default: ""
+  jira-url:
+    description: "Jira base URL for auto release notes linking (e.g. https://yourorg.atlassian.net/browse). Leave empty to disable Jira integration."
+    required: false
+    default: ""
+outputs:
+  new-tag: # id of output
+    description: 'new tag'
+  latestTagWithoutPreReleases: # id of output
+    description: 'outputs latestTagWithoutPreReleases'
+  latestTagWithPreReleases:
+    description: 'outputs latestTagWithPreReleases'
+  releaseType:
+    description: 'outputs releaseType one of (pre-release, full-release)'
+  isHotfix:
+    description: 'Returns true if its a hotfix'
+  previousBuild:
+    description: 'Returns the previous build'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
